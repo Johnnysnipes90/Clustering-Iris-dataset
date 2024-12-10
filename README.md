@@ -118,11 +118,10 @@ Iris-Clustering-Dashboard/
 ![Data Overview Screenshot](path/to/your/screenshot1.png)
 
 ### **2. PCA Visualization**
-![PCA Visualization Screenshot](Clustering-Iris-dataset\screenshots\pca.png)
+![PCA Visualization Screenshot](screenshots/pca.png)
 
 ### **3. Confusion Matrix**
-![Confusion Matrix Screenshot](Clustering-Iris-dataset\screenshots\confusion_matrix.png)
-> Replace `path/to/your/screenshot` with actual image paths in your repository.
+![Confusion Matrix Screenshot](screenshots/confusion_matrix.png)
 
 ---
 
