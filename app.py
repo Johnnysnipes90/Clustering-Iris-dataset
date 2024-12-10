@@ -3,19 +3,22 @@ import pandas as pd
 import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.cluster import KMeans, AgglomerativeClustering
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.metrics import silhouette_score, confusion_matrix
 from sklearn.decomposition import PCA
 import seaborn as sns
 import matplotlib.pyplot as plt
 import joblib
+from scipy.cluster.hierarchy import dendrogram, linkage
 
 # Sidebar Layout
 st.sidebar.title("Iris Clustering Dashboard")
 dataset_option = st.sidebar.selectbox("Select Dataset", ["Iris Dataset", "Upload Your Dataset"])
 clean_duplicates = st.sidebar.checkbox("Remove Duplicates", value=True)
 remove_outliers = st.sidebar.checkbox("Remove Outliers (IQR Method)", value=True)
+scaling_method = st.sidebar.selectbox("Scaling Method", ["StandardScaler", "MinMaxScaler", "None"])
 clustering_method = st.sidebar.selectbox("Clustering Algorithm", ["K-Means", "Hierarchical"])
+linkage_method = st.sidebar.selectbox("Linkage Method (Hierarchical)", ["ward", "single", "complete", "average"])
 n_clusters = st.sidebar.slider("Number of Clusters (K)", min_value=2, max_value=10, value=3)
 
 # Load Dataset
@@ -51,14 +54,20 @@ st.sidebar.dataframe(df.head())
 
 # Scale the Data
 numeric_cols = df.select_dtypes(include=['number']).columns
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(df[numeric_cols])
+if scaling_method == "StandardScaler":
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(df[numeric_cols])
+elif scaling_method == "MinMaxScaler":
+    scaler = MinMaxScaler()
+    X_scaled = scaler.fit_transform(df[numeric_cols])
+else:
+    X_scaled = df[numeric_cols].values
 
 # Clustering
 if clustering_method == "K-Means":
     model = KMeans(n_clusters=n_clusters, random_state=42)
-else:
-    model = AgglomerativeClustering(n_clusters=n_clusters, linkage="ward")
+elif clustering_method == "Hierarchical":
+    model = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage_method)
 
 df['cluster'] = model.fit_predict(X_scaled)
 
@@ -98,14 +107,14 @@ with tab3:
     plt.colorbar(label="Cluster")
     st.pyplot(plt)
 
-    # Heatmap
-    if 'species' in df.columns:
-        cm = confusion_matrix(df['species'], df['cluster'])
-        plt.figure(figsize=(8, 6))
-        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=n_clusters, yticklabels=iris.target_names)
-        plt.title("Confusion Matrix: Clusters vs True Labels")
-        plt.xlabel("Cluster")
-        plt.ylabel("True Label")
+    # Dendrogram for Hierarchical Clustering
+    if clustering_method == "Hierarchical":
+        linkage_matrix = linkage(X_scaled, method=linkage_method)
+        plt.figure(figsize=(10, 7))
+        dendrogram(linkage_matrix)
+        plt.title(f"Dendrogram ({linkage_method.capitalize()} Linkage)")
+        plt.xlabel("Samples")
+        plt.ylabel("Distance")
         st.pyplot(plt)
 
 # Model Management Tab
