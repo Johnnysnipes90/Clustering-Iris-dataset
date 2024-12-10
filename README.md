@@ -35,7 +35,7 @@ The Iris dataset is a classic dataset in machine learning and statistics, consis
   - Visualize results in 2D using PCA.
 
 - **Evaluation Metrics**:
-  - Compute Adjusted Rand Index (ARI) to assess clustering performance.
+  - Compute Adjusted Rand Index (ARI) and Silhouette score to assess clustering performance.
   - View confusion matrices for clustering vs. true labels.
 
 - **Interactive Dashboard**:
@@ -49,15 +49,15 @@ Follow these steps to set up the project on your local machine:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/Iris-Clustering-Dashboard.git
-   cd Iris-Clustering-Dashboard
+   git clone https://github.com/Johnnysnipes90/Clustering-Iris-dataset.git
+   cd Clustering-Iris-dataset
    ```
 
 2. **Set Up a Virtual Environment**:
    ```bash
    python -m venv venv
    source venv/bin/activate  # For Linux/Mac
-   .\venv\Scripts\activate   # For Windows
+   soucrce\venv\Scripts\activate   # For Windows
    ```
 
 3. **Install Dependencies**:
@@ -117,11 +117,10 @@ Iris-Clustering-Dashboard/
 ![Data Overview Screenshot](path/to/your/screenshot1.png)
 
 ### **2. PCA Visualization**
-![PCA Visualization Screenshot](path/to/your/screenshot2.png)
+![PCA Visualization Screenshot](Clustering-Iris-dataset\screenshots\pca.png)
 
 ### **3. Confusion Matrix**
-![Confusion Matrix Screenshot](path/to/your/screenshot3.png)
-
+![Confusion Matrix Screenshot](Clustering-Iris-dataset\screenshots\confusion_matrix.png)
 > Replace `path/to/your/screenshot` with actual image paths in your repository.
 
 ---
