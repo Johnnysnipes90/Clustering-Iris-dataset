@@ -103,6 +103,7 @@ Follow these steps to set up the project on your local machine:
 Iris-Clustering-Dashboard/
 ├── data/                 # Folder for data files (if needed)
 ├── src/                  # Folder for Python scripts (modular code)
+|── screenshots           # Folder for Screenshots
 ├── app.py                # Streamlit app entry point
 ├── requirements.txt      # Python dependencies
 ├── README.md             # Project description
